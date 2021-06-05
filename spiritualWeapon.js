@@ -11,7 +11,7 @@ let data = {}
 let activeScene = game.scenes.active
 
 /**
- * Create Spiritual Weapon item in inventory
+ * Create Spiritual Weapon item in inventory and token in active scene
  */
 if (args[0] === "on") {
   let damage = Math.floor(Math.floor(args[1] / 2));
@@ -21,6 +21,7 @@ if (args[0] === "on") {
   let weaponToken = weaponActor.data.token
   let gridSize = activeScene.data.grid
   await activeScene.createEmbeddedEntity('Token', mergeObject(weaponToken, { "x": target.x + gridSize || 0, "y": target.y || 0 }, { overwrite: true, inplace: true }))
+
   await tactor.createOwnedItem(
     {
       "name": "Summoned Spiritual Weapon",
