@@ -8,6 +8,7 @@ const target = canvas.tokens.get(lastArg.tokenId) || token;
 
 const castingItem = lastArg.efData.flags.dae.itemData
 let data = {}
+let activeScene = game.scenes.active
 
 /**
  * Create Spiritual Weapon item in inventory
@@ -16,51 +17,10 @@ if (args[0] === "on") {
   let damage = Math.floor(Math.floor(args[1] / 2));
   let image = castingItem.img;
 
-  let range = MeasuredTemplate.create({
-    t: "circle",
-    user: game.user._id,
-    x: target.x + canvas.grid.size / 2,
-    y: target.y + canvas.grid.size / 2,
-    direction: 0,
-    distance: 60,
-    borderColor: "#FF0000",
-    flags: {
-      DAESRD: {
-        SpiritualWeaponRange: {
-          ActorId: tactor.id
-        }
-      }
-    }
-    //fillColor: "#FF3366",
-  });
-  range.then(result => {
-    let templateData = {
-      t: "rect",
-      user: game.user._id,
-      distance: 7,
-      direction: 45,
-      x: 0,
-      y: 0,
-      flags: {
-        DAESRD: {
-          SpiritualWeapon: {
-            ActorId: tactor.id
-          }
-        }
-      },
-      fillColor: game.user.color
-    }
-    Hooks.once("createMeasuredTemplate", deleteTemplates);
-
-    let template = new game.dnd5e.canvas.AbilityTemplate(templateData)
-    template.actorSheet = tactor.sheet;
-    template.drawPreview()
-
-    async function deleteTemplates(scene, template) {
-      let removeTemplates = canvas.templates.placeables.filter(i => i.data.flags.DAESRD?.SpiritualWeaponRange?.ActorId === tactor.id);
-      await canvas.templates.deleteMany([removeTemplates[0].id]);
-    };
-  })
+  let weaponActor = game.actors.entities.find(a => a.name === "SpiritualWeaponToken")
+  let weaponToken = weaponActor.data.token
+  let gridSize = activeScene.data.grid
+  await activeScene.createEmbeddedEntity('Token', mergeObject(weaponToken, { "x": target.x + gridSize || 0, "y": target.y || 0 }, { overwrite: true, inplace: true }))
   await tactor.createOwnedItem(
     {
       "name": "Summoned Spiritual Weapon",
@@ -112,7 +72,7 @@ if (args[0] === "on") {
 // Delete Spitirual Weapon and template
 if (args[0] === "off") {
   let removeItem = tactor.items.find(i => i.data.flags?.DAESRD?.SpiritualWeapon === tactor.id)
-  let template = canvas.templates.placeables.filter(i => i.data.flags.DAESRD.SpiritualWeapon?.ActorId === tactor.id)
   if (removeItem) await tactor.deleteOwnedItem(removeItem.id);
-  if (template) await canvas.templates.deleteMany(template[0].id)
+  let weaponToken = activeScene.data.tokens.find(t => t.name === "SpiritualWeaponToken")
+  activeScene.deleteEmbeddedEntity("Token", [weaponToken._id])
 }
