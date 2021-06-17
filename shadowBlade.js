@@ -11,19 +11,12 @@ const DAEItem = lastArg.efData.flags.dae.itemData
  */
 if (args[0] === "on") {
   const sl = args[1]
-  console.log("lastArg", lastArg)
-  let startRound = game.combats.combats[0].current.round
-  lastArg.efData.duration.rounds = 10
-  lastArg.efData.duration.seconds = null
-  lastArg.efData.duration.startTime = null
-  lastArg.efData.duration.startRound = startRound
-  lastArg.efData.disabled = true
   let damage = 5
-  if (sl === "2") {
+  if (sl == "2" || sl == 2) {
     damage = 2
-  } else if (sl === "3" || sl === "4") {
+  } else if (sl == "3" || sl == 3 || sl == "4" || sl == 4) {
     damage = 3
-  } else if (sl === "5" || sl === "6") {
+  } else if (sl == "5" || sl == 5 || sl == "6" || sl == 6) {
     damage = 4
   }
   tactor.createOwnedItem(
@@ -55,9 +48,9 @@ if (args[0] === "on") {
       "img": DAEItem.img,
     }
   );
+  ui.notifications.notify("Weapon created in your inventory")
 }
 
-console.log("SHADOW BLADE - ", args[0])
 
 // Delete Shadow Blade
 if (args[0] === "off") {

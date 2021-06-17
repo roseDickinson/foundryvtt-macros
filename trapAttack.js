@@ -7,7 +7,7 @@ function createChatMessage(message) {
 }
 
 game.togglePause(true, true)
-FurnacePlaylistQoL.PlaySound("Test", "drums");
+game.playlists.find(p => p.name == "Test").playAll()
 LMRTFYRoller.requestSavingThrows(token.actor, "dex")
 if (!token) {
   return createChatMessage("TrapMacro: No token selected.")

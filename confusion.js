@@ -39,7 +39,7 @@ if (args[0] === "each") {
 
     if (saveRoll >= saveData.dc) {
         ChatMessage.create({ content: `Confusion ends for ${tactor.name} at the end of their turn` })
-        tactor.deleteEmbeddedEntity("ActiveEffect", lastArg.effectId);
+        tactor.deleteEmbeddedDocuments("ActiveEffect", [lastArg.effectId]);
     }
 
 }

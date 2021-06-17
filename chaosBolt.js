@@ -4,8 +4,11 @@ if (args[0] === "on") {
 
   const table = game.tables.entities.find(t => t.name === "Chaos Bolt Damage Type");
 
-  let result1 = table.roll().results[0];
-  let result2 = table.roll().results[0];
+  let roll1 = await table.roll()
+  let roll2 = await table.roll()
+
+  let result1 = roll1.results[0].data;
+  let result2 = roll2.results[0].data;
 
   let damageType1 = result1.text;
   let damageType2 = result2.text;

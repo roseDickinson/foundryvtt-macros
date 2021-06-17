@@ -37,6 +37,8 @@ if (args[0] === "on") {
             "img": DAEItem.img,
         }
     );
+    ui.notifications.notify("Weapon created in your inventory")
+
 }
 
 // Delete Holy Weapon 

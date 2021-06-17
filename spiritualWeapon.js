@@ -20,7 +20,11 @@ if (args[0] === "on") {
   let weaponActor = game.actors.entities.find(a => a.name === "SpiritualWeaponToken")
   let weaponToken = weaponActor.data.token
   let gridSize = activeScene.data.grid
-  await activeScene.createEmbeddedEntity('Token', mergeObject(weaponToken, { "x": target.x + gridSize || 0, "y": target.y || 0 }, { overwrite: true, inplace: true }))
+  let createdTokens = await activeScene.createEmbeddedDocuments('Token', [weaponToken])
+  createdTokens[0].update({
+    "x": target.x + gridSize || 0,
+    "y": target.y || 0
+  })
 
   await tactor.createOwnedItem(
     {
@@ -67,7 +71,6 @@ if (args[0] === "on") {
     },
   );
   ui.notifications.notify("Weapon created in your inventory")
-
 }
 
 // Delete Spitirual Weapon and template
@@ -75,5 +78,5 @@ if (args[0] === "off") {
   let removeItem = tactor.items.find(i => i.data.flags?.DAESRD?.SpiritualWeapon === tactor.id)
   if (removeItem) await tactor.deleteOwnedItem(removeItem.id);
   let weaponToken = activeScene.data.tokens.find(t => t.name === "SpiritualWeaponToken")
-  activeScene.deleteEmbeddedEntity("Token", [weaponToken._id])
+  activeScene.deleteEmbeddedDocuments("Token", [weaponToken._id])
 }
