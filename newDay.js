@@ -10,6 +10,7 @@ async function calculateWeather(tables) {
 
   if (
     generalResult === 'Rain' ||
+    generalResult === 'Hail' ||
     generalResult === 'Thunderstorm' ||
     generalResult === 'Snow'
   ) {
@@ -43,10 +44,10 @@ let weatherTables = {
     precipitation: "Precipitation - Extreme Summer (Desert)",
     wind: "Wind - Extreme Summer (Desert)",
   },
-  "Extreme Winter (North/Ice plain)": {
-    general: "General Weather - Extreme Winter (North/Ice plain)",
-    precipitation: "Precipitation - Extreme Winter (North/Ice plain)",
-    wind: "Wind - Extreme Winter (North/Ice plain)",
+  "Extreme Winter (North/Ice plains)": {
+    general: "General Weather - Extreme Winter (North/Ice plains)",
+    precipitation: "Precipitation - Extreme Winter (North/Ice plains)",
+    wind: "Wind - Extreme Winter (North/Ice plains)",
   },
   Spring: {
     general: "General Weather - Spring",
