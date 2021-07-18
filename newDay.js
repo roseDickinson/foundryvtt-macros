@@ -24,7 +24,7 @@ async function calculateWeather(tables) {
     precipitationResult = "N/A"
   }
 
-  let message = `<h2> Weather for the new day </h2><br/><p>General - <strong>${generalResult}</strong></p><br/><p>Precipitation level - <strong>${precipitationResult}</strong></p><br/><p>Wind speed - <strong>${windResult}</strong></p><br/><p><strong>Don't forget to move the day forward scrub</strong></p>`
+  let message = `<h2> Weather for the new day </h2><br/><p>General - <strong>${generalResult}</strong></p><br/><p>Precipitation level - <strong>${precipitationResult}</strong></p><br/><p>Wind speed - <strong>${windResult}</strong></p><br/>`
   let chatData = {
     user: game.user._id,
     content: message,
@@ -78,3 +78,4 @@ new Dialog({
   title: 'What is the season/location?',
   buttons,
 }).render(true)
+SimpleCalendar.api.changeDate({ day: 1 })
