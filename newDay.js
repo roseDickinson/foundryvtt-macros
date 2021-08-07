@@ -9,10 +9,10 @@ async function calculateWeather(tables) {
   let precipitationResult = null
 
   if (
-    generalResult === 'Rain' ||
-    generalResult === 'Hail' ||
-    generalResult === 'Thunderstorm' ||
-    generalResult === 'Snow'
+    generalResult === "Rain" ||
+    generalResult === "Hail" ||
+    generalResult === "Thunderstorm" ||
+    generalResult === "Snow"
   ) {
     let precipitationRoll = await precipitationTable.roll()
     precipitationResult = precipitationRoll.results[0].data.text
@@ -76,7 +76,7 @@ for (const key in weatherTables) {
 }
 
 new Dialog({
-  title: 'What is the season/location?',
+  title: "What is the season/location?",
   buttons,
 }).render(true)
 SimpleCalendar.api.changeDate({ day: 1 })
