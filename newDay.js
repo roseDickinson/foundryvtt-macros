@@ -25,7 +25,14 @@ async function calculateWeather(tables) {
     precipitationResult = "N/A"
   }
 
-  let message = `<h2> Weather for the new day </h2><br/><p>General - <strong>${generalResult}</strong></p><br/><p>Precipitation level - <strong>${precipitationResult}</strong></p><br/><p>Wind speed - <strong>${windResult}</strong></p><br/>`
+  let message = `
+  <h2> Weather for the new day </h2>
+  <br/>
+  <p>General - <strong>${generalResult}</strong></p>
+  <br/>
+  <p>Precipitation level - <strong>${precipitationResult}</strong></p>
+  <br/>
+  <p>Wind speed - <strong>${windResult}</strong></p><br/>`
   let chatData = {
     user: game.user._id,
     content: message,
