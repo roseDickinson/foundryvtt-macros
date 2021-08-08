@@ -12,8 +12,8 @@ const DAEItem = lastArg.efData.flags.dae.itemData
 if (args[0] === "on") {
   const sl = args[1]
   let damage = sl
-  tactor.createOwnedItem(
-    {
+  tactor.createEmbeddedDocuments("Item",
+    [{
       "name": "Witch Bolt repeating",
       "type": "weapon",
       "data": {
@@ -37,7 +37,7 @@ if (args[0] === "on") {
         },
       },
       "img": DAEItem.img,
-    }
+    }]
   );
   ui.notifications.notify("Weapon created in your inventory")
 }
@@ -46,5 +46,5 @@ if (args[0] === "on") {
 // Delete Witch Bolt
 if (args[0] === "off") {
   let casterItem = tactor.data.items.find(i => i.name === "Witch Bolt repeating" && i.type === "weapon")
-  tactor.deleteOwnedItem(casterItem._id)
+  if (casterItem) await casterItem.delete();
 }

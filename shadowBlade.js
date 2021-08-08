@@ -19,8 +19,8 @@ if (args[0] === "on") {
   } else if (sl == "5" || sl == 5 || sl == "6" || sl == 6) {
     damage = 4
   }
-  tactor.createOwnedItem(
-    {
+  tactor.createEmbeddedDocuments("Item",
+    [{
       "name": "Shadow Blade repeating",
       "type": "weapon",
       "data": {
@@ -46,7 +46,7 @@ if (args[0] === "on") {
         },
       },
       "img": DAEItem.img,
-    }
+    }]
   );
   ui.notifications.notify("Weapon created in your inventory")
 }
@@ -55,5 +55,5 @@ if (args[0] === "on") {
 // Delete Shadow Blade
 if (args[0] === "off") {
   let casterItem = tactor.data.items.find(i => i.name === "Shadow Blade repeating" && i.type === "weapon")
-  tactor.deleteOwnedItem(casterItem._id)
+  if (casterItem) await casterItem.delete();
 }

@@ -18,7 +18,7 @@ if (args[0] === "on") {
   let damage = 4 + Math.max(sl - 7, 0)
   let image = castingItem.img;
 
-  let weaponActor = game.actors.entities.find(a => a.name === "MordenkainensSwordToken")
+  let weaponActor = game.actors.contents.find(a => a.name === "MordenkainensSwordToken")
   let weaponToken = weaponActor.data.token
   let gridSize = activeScene.data.grid
   let createdTokens = await activeScene.createEmbeddedDocuments('Token', [weaponToken])
@@ -27,8 +27,8 @@ if (args[0] === "on") {
     "y": target.y || 0
   })
 
-  await tactor.createOwnedItem(
-    {
+  await tactor.createEmbeddedDocuments("Item",
+    [{
       "name": "Summoned Mordenkainen's Sword",
       "type": "weapon",
       "data": {
@@ -69,7 +69,7 @@ if (args[0] === "on") {
         }
       },
       "img": `${image}`,
-    },
+    }]
   );
   ui.notifications.notify("Weapon created in your inventory")
 
@@ -78,7 +78,7 @@ if (args[0] === "on") {
 // Delete Spitirual Weapon and template
 if (args[0] === "off") {
   let removeItem = tactor.items.find(i => i.data.flags?.DAESRD?.MordenkainensSword === tactor.id)
-  if (removeItem) await tactor.deleteOwnedItem(removeItem.id);
+  if (removeItem) await removeItem.delete();
   let weaponToken = activeScene.data.tokens.find(t => t.name === "MordenkainensSwordToken")
-  activeScene.deleteEmbeddedDocuments("Token", [weaponToken._id])
+  activeScene.deleteEmbeddedDocuments("Token", [weaponToken.id])
 }

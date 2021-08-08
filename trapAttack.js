@@ -1,6 +1,6 @@
 function createChatMessage(message) {
   let chatData = {
-    user: game.user._id,
+    user: game.user.id,
     content: message,
   }
   ChatMessage.create(chatData, {})
@@ -13,7 +13,7 @@ if (!token) {
   return createChatMessage("TrapMacro: No token selected.")
 }
 
-let trapActor = game.actors.entities.find(a => a.name === args[0])
+let trapActor = game.actors.contents.find(a => a.name === args[0])
 if (!trapActor) {
   return createChatMessage(`TrapMacro: Target token ${args[0]} not found`)
 }

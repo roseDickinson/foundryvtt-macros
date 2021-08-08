@@ -1,8 +1,8 @@
 
 async function calculateWeather(tables) {
-  let generalTable = game.tables.entities.find(t => t.name === tables.general);
-  let precipitationTable = game.tables.entities.find(t => t.name === tables.precipitation);
-  let windTable = game.tables.entities.find(t => t.name === tables.wind);
+  let generalTable = game.tables.contents.find(t => t.name === tables.general);
+  let precipitationTable = game.tables.contents.find(t => t.name === tables.precipitation);
+  let windTable = game.tables.contents.find(t => t.name === tables.wind);
 
   let generalRoll = await generalTable.roll()
   let generalResult = generalRoll.results[0].data.text
@@ -34,7 +34,7 @@ async function calculateWeather(tables) {
   <br/>
   <p>Wind speed - <strong>${windResult}</strong></p><br/>`
   let chatData = {
-    user: game.user._id,
+    user: game.user.id,
     content: message,
   }
   ChatMessage.create(chatData, {})

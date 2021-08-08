@@ -2,7 +2,7 @@
 if (args[0] === "on") {
   const sl = args[1]
 
-  const table = game.tables.entities.find(t => t.name === "Chaos Bolt Damage Type");
+  const table = game.tables.contents.find(t => t.name === "Chaos Bolt Damage Type");
 
   let roll1 = await table.roll()
   let roll2 = await table.roll()
@@ -29,14 +29,14 @@ if (args[0] === "on") {
     }
     let message = `<h2> Chaos Bolt </h2><br/><p>1d8(${damage1}) + 1d8(${damage2}) + ${xtraDmg._formula}(${xtraDmgCalc}) = </p></br><h3>${damage1 + damage2 + xtraDmg.total} ${type} damage</h3>${rollagain}`;
     let chatData = {
-      user: game.user._id,
+      user: game.user.id,
       content: message,
     }
     ChatMessage.create(chatData, {})
   }
 
-  function castAtLevel(lvl) {
-    let simpleDamage = new Roll(`${lvl}d6`).evaluate();
+  async function castAtLevel(lvl) {
+    let simpleDamage = await new Roll(`${lvl}d6`).evaluate();
     new Dialog({
       title: 'Choose your damage type',
       content: `Deal ${damageType1} or ${damageType2} damage?`,

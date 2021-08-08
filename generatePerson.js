@@ -11,7 +11,7 @@ const nameByRace = {
 nameByRace.Aasimar = nameByRace.Human
 
 async function getTableResult(tableName) {
-  let table = game.tables.entities.find(t => t.name === tableName)
+  let table = game.tables.contents.find(t => t.name === tableName)
   let roll = await table.roll()
   return roll.results[0].data.text 
 }
@@ -24,7 +24,7 @@ async function generateName(race, gender) {
   } else if (gender.includes(" man")) {
     table = "masc"
   } else {
-    if (tableNames.andro) {
+    if (nameTables.andro) {
       table = "andro"
     } else {
       let nameRoll = await new Roll("1d2").roll()
@@ -66,9 +66,9 @@ async function generatePerson(location) {
   </p>
   `
   let chatData = {
-    user: game.user._id,
+    user: game.user.id,
     content: message,
-    whisper: [game.user._id]
+    whisper: [game.user.id]
   }
   ChatMessage.create(chatData, {})
 }

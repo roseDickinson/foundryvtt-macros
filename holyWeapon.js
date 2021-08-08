@@ -10,8 +10,8 @@ const DAEItem = lastArg.efData.flags.dae.itemData
  * Create Holy Weapon item in inventory
  */
 if (args[0] === "on") {
-  tactor.createOwnedItem(
-    {
+  tactor.createEmbeddedDocuments("Item",
+    [{
       "name": "Holy Weapon Damage",
       "type": "weapon",
       "data": {
@@ -35,7 +35,7 @@ if (args[0] === "on") {
         },
       },
       "img": DAEItem.img,
-    }
+    }]
   );
   ui.notifications.notify("Weapon created in your inventory")
 
@@ -44,5 +44,5 @@ if (args[0] === "on") {
 // Delete Holy Weapon 
 if (args[0] === "off") {
   let casterItem = tactor.data.items.find(i => i.name === "Holy Weapon Damage" && i.type === "weapon")
-  tactor.deleteOwnedItem(casterItem._id)
+  if (casterItem) await casterItem.delete();
 }

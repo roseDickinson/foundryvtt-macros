@@ -17,7 +17,7 @@ if (args[0] === "on") {
   let damage = Math.floor(Math.floor(args[1] / 2));
   let image = castingItem.img;
 
-  let weaponActor = game.actors.entities.find(a => a.name === "SpiritualWeaponToken")
+  let weaponActor = game.actors.contents.find(a => a.name === "SpiritualWeaponToken")
   let weaponToken = weaponActor.data.token
   let gridSize = activeScene.data.grid
   let createdTokens = await activeScene.createEmbeddedDocuments('Token', [weaponToken])
@@ -26,8 +26,8 @@ if (args[0] === "on") {
     "y": target.y || 0
   })
 
-  await tactor.createOwnedItem(
-    {
+  await tactor.createEmbeddedDocuments("Item",
+    [{
       "name": "Summoned Spiritual Weapon",
       "type": "weapon",
       "data": {
@@ -68,7 +68,7 @@ if (args[0] === "on") {
         }
       },
       "img": `${image}`,
-    },
+    }]
   );
   ui.notifications.notify("Weapon created in your inventory")
 }
@@ -76,7 +76,7 @@ if (args[0] === "on") {
 // Delete Spitirual Weapon and template
 if (args[0] === "off") {
   let removeItem = tactor.items.find(i => i.data.flags?.DAESRD?.SpiritualWeapon === tactor.id)
-  if (removeItem) await tactor.deleteOwnedItem(removeItem.id);
+  if (removeItem) await removeItem.delete();
   let weaponToken = activeScene.data.tokens.find(t => t.name === "SpiritualWeaponToken")
-  activeScene.deleteEmbeddedDocuments("Token", [weaponToken._id])
+  activeScene.deleteEmbeddedDocuments("Token", [weaponToken.id])
 }
